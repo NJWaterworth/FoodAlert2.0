@@ -22,8 +22,10 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 import HomeScreen from './pages/HomeScreen';
 import ProfileScreen from './pages/ProfileScreen';
+import LoginScreen from './pages/LoginScreen';
 
 const MainNavigator = createStackNavigator({
+  Login: {screen: LoginScreen},
   Home: {screen: HomeScreen},
   Profile: {screen: ProfileScreen},
 });
