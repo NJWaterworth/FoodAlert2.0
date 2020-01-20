@@ -24,8 +24,10 @@ import CalendarPage from './pages/CalendarPage';
 import ProfilePage from './pages/ProfilePage';
 import ListPage from './pages/ListPage';
 import CameraPage from './pages/CameraPage';
+import LoginScreen from './pages/LoginScreen';
 
 const MainNavigator = createStackNavigator({
+  Login: {screen: LoginPage},
   Calendar: {screen: CalendarPage},
   Profile: {screen: ProfilePage},
   List: {screen: ListPage},
