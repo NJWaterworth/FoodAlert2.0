@@ -20,12 +20,16 @@ import {
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
-import HomeScreen from './pages/HomeScreen';
-import ProfileScreen from './pages/ProfileScreen';
+import CalendarPage from './pages/CalendarPage';
+import ProfilePage from './pages/ProfilePage';
+import ListPage from './pages/ListPage';
+import CameraPage from './pages/CameraPage';
 
 const MainNavigator = createStackNavigator({
-  Home: {screen: HomeScreen},
-  Profile: {screen: ProfileScreen},
+  Calendar: {screen: CalendarPage},
+  Profile: {screen: ProfilePage},
+  List: {screen: ListPage},
+  Camera: {screen: CameraPage},
 });
 
 const App =createAppContainer(MainNavigator);
