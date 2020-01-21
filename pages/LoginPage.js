@@ -1,6 +1,6 @@
 import React from 'react';
 
-import  {Alert, Button, TextInput, View, StyleSheet } from 'react-native';
+import  {Alert, Button, TextInput, View, StyleSheet, PushNotificationIOS } from 'react-native';
 
 export default class Login extends React.Component {
    constructor(props) {
@@ -16,6 +16,11 @@ export default class Login extends React.Component {
        const { username, password } = this.state;
        Alert.alert('Credentials', `${username} + ${password}`);
        this.props.navigation.navigate('Profile', {name: 'Jane'});
+   }
+
+   onSignUp() {
+      // TODO: Add in the Regist
+      this.props.navigation.navigate('Register');
    }
 
    render() {
@@ -40,6 +45,12 @@ export default class Login extends React.Component {
           style={styles.input}
           onPress={this.onLogin.bind(this)}
         />
+
+        <Button
+          title={'Sign up here'}
+          style={styles.input}
+          onPress={this.onSignUp.bind(this)}
+          />
       </View>
        );
    }
