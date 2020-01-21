@@ -1,6 +1,6 @@
 import React from 'react';
 
-import  {Alert, Button, TextInput, View, StyleSheet, PushNotificationIOS } from 'react-native';
+import  {Alert, Button, TextInput, View, StyleSheet } from 'react-native';
 
 export default class Login extends React.Component {
    constructor(props) {
@@ -19,7 +19,6 @@ export default class Login extends React.Component {
    }
 
    onSignUp() {
-      // TODO: Add in the Regist
       this.props.navigation.navigate('Register');
    }
 
