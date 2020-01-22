@@ -18,6 +18,10 @@ export default class Login extends React.Component {
        this.props.navigation.navigate('Profile', {name: 'Jane'});
    }
 
+   onSignUp() {
+      this.props.navigation.navigate('Register');
+   }
+
    render() {
        return (
         <View style={styles.container}>
@@ -40,6 +44,12 @@ export default class Login extends React.Component {
           style={styles.input}
           onPress={this.onLogin.bind(this)}
         />
+
+        <Button
+          title={'Sign up here'}
+          style={styles.input}
+          onPress={this.onSignUp.bind(this)}
+          />
       </View>
        );
    }
