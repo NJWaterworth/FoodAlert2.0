@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "62181804422",
+    "firebase_url": "https://foodalert-a4fb5.firebaseio.com",
+    "project_id": "foodalert-a4fb5",
+    "storage_bucket": "foodalert-a4fb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62181804422:android:16e07869dca61b82c3c407",
+        "android_client_info": {
+          "package_name": "com.foodalert"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "62181804422-86eb8u33v3j796b6oumt9nia0083vqti.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSSye2lTpTl4QyIwXo7hFMiXmogTdIlhQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "62181804422-86eb8u33v3j796b6oumt9nia0083vqti.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "62181804422-h85oin5pl7qsd954lsaf74mkqfjcrqp3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.foodAlert"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
