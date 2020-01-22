@@ -1,6 +1,7 @@
 import React from 'react';
+import CustomButton from '../components/custombutton';
+import  {Alert, Image, ImageBackground, Button, TextInput, View, StyleSheet} from 'react-native';
 
-import  {Alert, Button, TextInput, View, StyleSheet } from 'react-native';
 
 export default class Login extends React.Component {
    constructor(props) {
@@ -23,14 +24,24 @@ export default class Login extends React.Component {
    }
 
    render() {
+	   
        return (
-        <View style={styles.container}>
+		 
+		 <ImageBackground 
+			style={styles.imgBackground}
+			resizeMode='cover'
+			source={require('../images/apple1.png')} 
+		>
+	    
+		<View style={styles.container}>
+		
         <TextInput
           value={this.state.username}
           onChangeText={(username) => this.setState({ username })}
           placeholder={'Username'}
           style={styles.input}
         />
+		
         <TextInput
           value={this.state.password}
           onChangeText={(password) => this.setState({ password })}
@@ -39,34 +50,44 @@ export default class Login extends React.Component {
           style={styles.input}
         />
         
-        <Button
-          title={'Login'}
-          style={styles.input}
+        <CustomButton
+          text="Login"
           onPress={this.onLogin.bind(this)}
+		  customStyle={{
+			backgroundColor: 'rgba(88, 194, 141, 0.8)',
+			marginBottom: 0}}
         />
 
-        <Button
-          title={'Sign up here'}
-          style={styles.input}
+         <CustomButton
+          text="Sign Up"
           onPress={this.onSignUp.bind(this)}
-          />
-      </View>
-       );
+		  customStyle={{backgroundColor: 'transparent'}} 
+        />
+		 
+		</View>
+	  </ImageBackground>
+      );
    }
 }
+
 const styles = StyleSheet.create({
+	imgBackground:{
+		width: '100%',
+		height: '100%',
+		flex: 1
+	},
     container: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: '#ecf0f1',
+	  backgroundColor: 'transparent',
     },
     input: {
       width: 200,
       height: 44,
       padding: 10,
-      borderWidth: 1,
-      borderColor: 'black',
+	  backgroundColor: 'rgba(255,255,255,.8)',
+	  borderRadius: 10,
       marginBottom: 10,
     },
   });
