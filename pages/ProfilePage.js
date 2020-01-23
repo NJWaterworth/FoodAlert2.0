@@ -17,20 +17,9 @@ export default class ProfilePage extends React.Component {
   render() {
     const {navigate} = this.props.navigation;
     return (
-    <View>
-      <Button
-        title="Go to Camera"
-        onPress={() => navigate('Camera', {name: 'Jane'})}
-      />
-      <Button
-        title="Go to List Page"
-        onPress={() => navigate('List', {name: 'Jane'})}
-      />
-      <Button
-        title="Go to Calendar"
-        onPress={() => navigate('Calendar', {name: 'Jane'})}
-      />
-    </View>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+             <Text style={{ marginTop: 50, fontSize: 25 }}>Profile</Text>
+      </View>
     );
   }
 }
