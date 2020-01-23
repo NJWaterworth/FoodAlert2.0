@@ -12,24 +12,13 @@ import {
 
 export default class ListPage extends React.Component {
   static navigationOptions = {
-    title: 'Welcome',
+    title: 'List',
   };
   render() {
     const {navigate} = this.props.navigation;
     return (
-      <View>
-        <Button
-          title="Go to Camera"
-          onPress={() => navigate('Camera', {name: 'Jane'})}
-        />
-        <Button
-          title="Go to Calendar"
-          onPress={() => navigate('Calendar', {name: 'Jane'})}
-        />
-        <Button
-          title="Go to Jane's profile"
-          onPress={() => navigate('Profile', {name: 'Jane'})}
-        />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+             <Text style={{ marginTop: 50, fontSize: 25 }}>List</Text>
       </View>
     );
   }

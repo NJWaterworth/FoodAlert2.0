@@ -12,24 +12,13 @@ import {
 
 export default class CameraPage extends React.Component {
   static navigationOptions = {
-    title: 'Welcome',
+    title: 'Camera',
   };
   render() {
     const {navigate} = this.props.navigation;
     return (
-      <View>
-        <Button
-          title="Go to Calendar"
-          onPress={() => navigate('Calendar', {name: 'Jane'})}
-        />
-        <Button
-          title="Go to List Page"
-          onPress={() => navigate('List', {name: 'Jane'})}
-        />
-        <Button
-          title="Go to Jane's profile"
-          onPress={() => navigate('Profile', {name: 'Jane'})}
-        />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+             <Text style={{ marginTop: 50, fontSize: 25 }}>Camera</Text>
       </View>
     );
   }
