@@ -3,6 +3,7 @@ import React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
+  TouchableOpacity,
   ScrollView,
   View,
   Text,
@@ -72,3 +73,13 @@ export default class CalendarPage extends React.Component {
     );
   }
 }
+
+// const styles = StyleSheet.create({
+//   button: {
+//     alignItems: 'center',
+//     backgroundColor: '#DDDDDD',
+//     padding: 10,
+//     width: 300,
+//     marginTop: 16,
+//   },
+// });
