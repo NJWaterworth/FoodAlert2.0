@@ -1,13 +1,13 @@
 import React from 'react';
 import { Alert, StyleSheet, View, TextInput, Button } from 'react-native';
-
+import firebase from 'react-native-firebase';
 
 export default class Register extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-           username: '',
+           email: '',
            password: '',
            confirmPassword: '',
            name: ''
@@ -23,18 +23,31 @@ export default class Register extends React.Component {
             Alert.alert("Error", "Passwords do not match");
             return;
         }
-        const { username, password, name } = this.state;
-        Alert.alert('Registered', 'Congrats');
-        this.props.navigation.navigate('Profile', {name: 'Jane'});
+    
+            // console.log(firebase.auth());
+        firebase.auth()
+            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then(user => {
+                console.log("Then block");
+                console.log(user);
+                this.props.navigation.navigate('Profile', {name: 'Jane'});
+            })
+            .catch((error)=> {
+                const {code, message} = error;
+                console.log(code);
+                console.log(message);
+                Alert.alert(message);
+            })
+        console.log("Finish block");
     }
 
     render() {
         return(
             <View style={styles.container}>
             <TextInput
-                value={this.state.username}
-                onChangeText={(username) => this.setState({ username })}
-                placeholder={'Username'}
+                value={this.state.email}
+                onChangeText={(email) => this.setState({ email })}
+                placeholder={'email'}
                 style={styles.input}
             />
             <TextInput
