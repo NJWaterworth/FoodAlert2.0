@@ -1,22 +1,31 @@
 import React from 'react';
 import CustomButton from '../components/custombutton';
 import  {Alert, Image, ImageBackground, Button, TextInput, View, StyleSheet} from 'react-native';
-
+import firebase from 'react-native-firebase';
 
 export default class Login extends React.Component {
    constructor(props) {
        super(props);
 
        this.state = {
-           username: '',
+           email: '',
            password: '',
        };
    }
 
    onLogin() {
-       const { username, password } = this.state;
-       Alert.alert('Credentials', `${username} + ${password}`);
-       this.props.navigation.navigate('Profile', {name: 'Jane'});
+        firebase.auth()
+        .signInWithEmailAndPassword(this.state.email, this.state.password)
+        .then((user) => {
+          this.props.navigation.navigate('Profile', {name: 'jasper'})
+          Alert.alert('Credentials', `${this.state.email} + ${this.state.password}`);
+        })
+        .catch((error) => {
+          const {code, message} = error;
+          console.log(code);
+          console.log(message);
+        })
+      //  this.props.navigation.navigate('Profile', {name: 'Jane'});
    }
 
    onSignUp() {
@@ -36,9 +45,9 @@ export default class Login extends React.Component {
 		<View style={styles.container}>
 		
         <TextInput
-          value={this.state.username}
-          onChangeText={(username) => this.setState({ username })}
-          placeholder={'Username'}
+          value={this.state.email}
+          onChangeText={(email) => this.setState({ email })}
+          placeholder={'email'}
           style={styles.input}
         />
 		
