@@ -18,12 +18,12 @@ export default class Login extends React.Component {
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((user) => {
           this.props.navigation.navigate('Profile', {name: 'jasper'})
-          Alert.alert('Credentials', `${this.state.email} + ${this.state.password}`);
         })
         .catch((error) => {
           const {code, message} = error;
           console.log(code);
           console.log(message);
+          Alert.alert(message);
         })
       //  this.props.navigation.navigate('Profile', {name: 'Jane'});
    }

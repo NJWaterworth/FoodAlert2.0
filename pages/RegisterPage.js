@@ -30,13 +30,13 @@ export default class Register extends React.Component {
             .then(user => {
                 console.log("Then block");
                 console.log(user);
-                Alert.alert('Registered', 'Congrats');
                 this.props.navigation.navigate('Profile', {name: 'Jane'});
             })
             .catch((error)=> {
                 const {code, message} = error;
                 console.log(code);
                 console.log(message);
+                Alert.alert(message);
             })
         console.log("Finish block");
     }
