@@ -1,17 +1,33 @@
 import React from 'react';
 import { Alert, StyleSheet, View, TextInput, Button } from 'react-native';
-
+import firebase from 'react-native-firebase';
 
 export default class Register extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-           username: '',
+           email: '',
            password: '',
            confirmPassword: '',
-           name: ''
+           firstname: '',
+           lastname: ''
         };
+    }
+
+    writeUserData(email, firstname, lastname) {
+        console.log('email ', email);
+        console.log('firstname ', firstname);
+        console.log('lastname ', lastname);
+        firebase.database().ref('Users/').push({
+            email,
+            firstname,
+            lastname
+        }).then((data) => {
+            console.log('Data ', data);
+        }).catch((error) => {
+            Alert.alert(error.message);
+        })
     }
 
     onRegister() {
@@ -23,18 +39,32 @@ export default class Register extends React.Component {
             Alert.alert("Error", "Passwords do not match");
             return;
         }
-        const { username, password, name } = this.state;
-        Alert.alert('Registered', 'Congrats');
-        this.props.navigation.navigate('Profile', {name: 'Jane'});
+    
+            // console.log(firebase.auth());
+        firebase.auth()
+            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then(user => {
+                console.log("Then block");
+                console.log(user);
+                this.writeUserData(this.state.email, this.state.firstname, this.state.lastname);
+                this.props.navigation.navigate('Profile', {name: 'Jane'});
+            })
+            .catch((error)=> {
+                const {code, message} = error;
+                console.log(code);
+                console.log(message);
+                Alert.alert(message);
+            })
+        console.log("Finish block");
     }
 
     render() {
         return(
             <View style={styles.container}>
             <TextInput
-                value={this.state.username}
-                onChangeText={(username) => this.setState({ username })}
-                placeholder={'Username'}
+                value={this.state.email}
+                onChangeText={(email) => this.setState({ email })}
+                placeholder={'email'}
                 style={styles.input}
             />
             <TextInput
@@ -54,9 +84,16 @@ export default class Register extends React.Component {
             />
 
             <TextInput
-                value={this.state.name}
-                onChangeText={(name) => this.setState({ name })}
-                placeholder={'Name'}
+                value={this.state.firstname}
+                onChangeText={(firstname) => this.setState({ firstname })}
+                placeholder={'first name'}
+                style={styles.input}
+            />
+            
+            <TextInput
+                value={this.state.lastname}
+                onChangeText={(lastname) => this.setState({ lastname })}
+                placeholder={'last name'}
                 style={styles.input}
             />
   
