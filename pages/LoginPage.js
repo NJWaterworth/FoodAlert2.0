@@ -32,6 +32,10 @@ export default class Login extends React.Component {
       this.props.navigation.navigate('Register');
    }
 
+   onForgotPassword() {
+     this.props.navigation.navigate('ForgotPassword');
+   }
+
    render() {
 	   
        return (
@@ -72,6 +76,11 @@ export default class Login extends React.Component {
           onPress={this.onSignUp.bind(this)}
 		  customStyle={{backgroundColor: 'transparent'}} 
         />
+        <CustomButton
+          text="Forgot Password"
+          onPress={this.onForgotPassword.bind(this)}
+          customStyle = {{backgroundColor: 'transparent'}}
+          />
 		 
 		</View>
 	  </ImageBackground>
