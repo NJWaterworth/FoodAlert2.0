@@ -15,14 +15,12 @@ export default class Register extends React.Component {
         };
     }
 
-    writeUserData(email, firstname, lastname) {
-        console.log('email ', email);
-        console.log('firstname ', firstname);
-        console.log('lastname ', lastname);
+    writeUserData(email, firstname, lastname, uid) {
         firebase.database().ref('Users/').push({
             email,
             firstname,
-            lastname
+            lastname,
+            uid
         }).then((data) => {
             console.log('Data ', data);
         }).catch((error) => {
@@ -44,9 +42,7 @@ export default class Register extends React.Component {
         firebase.auth()
             .createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(user => {
-                console.log("Then block");
-                console.log(user);
-                this.writeUserData(this.state.email, this.state.firstname, this.state.lastname);
+                this.writeUserData(this.state.email, this.state.firstname, this.state.lastname, user.user.uid);
                 this.props.navigation.navigate('Profile', {name: 'Jane'});
             })
             .catch((error)=> {
