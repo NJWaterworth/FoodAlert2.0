@@ -16,13 +16,12 @@ export default class Register extends React.Component {
     }
 
     writeUserData(email, firstname, lastname, uid) {
-        firebase.database().ref('Users/').push({
+        firebase.database().ref().child('Users').child(uid).set({
             email,
             firstname,
             lastname,
             uid
         }).then((data) => {
-            console.log('Data ', data);
         }).catch((error) => {
             Alert.alert(error.message);
         })
@@ -51,7 +50,6 @@ export default class Register extends React.Component {
                 console.log(message);
                 Alert.alert(message);
             })
-        console.log("Finish block");
     }
 
     render() {
