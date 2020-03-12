@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  AppRegistry,
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
@@ -13,6 +14,9 @@ import {
 
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {TextInput} from 'react-native';
+
+const expired = {key:'expired', color: 'red'};
+const expiring = {key:'expiring', color: 'blue'};
 
 export default class CalendarPage extends React.Component {
   constructor(props) {
@@ -53,10 +57,18 @@ export default class CalendarPage extends React.Component {
           // Handler which gets executed when press arrow icon right. It receive a callback can go next month
           onPressArrowRight={addMonth => addMonth()}
           // Collection of dates that have to be marked. Default = {}
-          markedDates={{[this.state.selected]: {selected: true, selectedDotColor: 'blue'}}}
+          markedDates={{
+            // examples of dots or select color
+            '2020-03-24': {dots: [expiring], selectedColor: 'green'},
+            '2020-03-25': {dots: [expired], selectedColor: 'green'},
+            '2020-03-26': {dots: [expired], selectedColor: 'green'},
+            [this.state.selected]: {selected: true, selectedColor: 'green'},
+          }}
+          markingType={'multi-dot'}
           // Specify theme properties to override specific styles for calendar parts. Default = {}
           theme={{}}
         />
+        
         <Button
           title="Go to Camera"
           onPress={() => navigate('Camera', {name: 'Jane'})}
