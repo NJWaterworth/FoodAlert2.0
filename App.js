@@ -30,10 +30,12 @@ import ListPage from './pages/ListPage';
 import CameraPage from './pages/CameraPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 const LoginStack = createStackNavigator({
   Login: {screen: LoginPage},
   Register: {screen: RegisterPage},
+  ForgotPassword: {screen: ForgotPasswordPage},
 },
 {
   navigationOptions: {

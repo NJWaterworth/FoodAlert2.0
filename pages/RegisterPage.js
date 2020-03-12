@@ -10,8 +10,22 @@ export default class Register extends React.Component {
            email: '',
            password: '',
            confirmPassword: '',
-           name: ''
+           firstname: '',
+           lastname: ''
         };
+    }
+
+    writeUserData(email, firstname, lastname, uid) {
+        firebase.database().ref('Users/').push({
+            email,
+            firstname,
+            lastname,
+            uid
+        }).then((data) => {
+            console.log('Data ', data);
+        }).catch((error) => {
+            Alert.alert(error.message);
+        })
     }
 
     onRegister() {
@@ -28,8 +42,7 @@ export default class Register extends React.Component {
         firebase.auth()
             .createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(user => {
-                console.log("Then block");
-                console.log(user);
+                this.writeUserData(this.state.email, this.state.firstname, this.state.lastname, user.user.uid);
                 this.props.navigation.navigate('Profile', {name: 'Jane'});
             })
             .catch((error)=> {
@@ -67,9 +80,16 @@ export default class Register extends React.Component {
             />
 
             <TextInput
-                value={this.state.name}
-                onChangeText={(name) => this.setState({ name })}
-                placeholder={'Name'}
+                value={this.state.firstname}
+                onChangeText={(firstname) => this.setState({ firstname })}
+                placeholder={'first name'}
+                style={styles.input}
+            />
+            
+            <TextInput
+                value={this.state.lastname}
+                onChangeText={(lastname) => this.setState({ lastname })}
+                placeholder={'last name'}
                 style={styles.input}
             />
   
