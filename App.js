@@ -26,6 +26,7 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import CalendarPage from './pages/CalendarPage';
 import ProfilePage from './pages/ProfilePage';
+import ProfileChange from './pages/ProfileChangePage'
 import ListPage from './pages/ListPage';
 import CameraPage from './pages/CameraPage';
 import LoginPage from './pages/LoginPage';
@@ -59,7 +60,7 @@ const CalendarStack = createStackNavigator({
 
 const ProfileStack = createStackNavigator({
   Profile: {screen: ProfilePage},
-  // TODO: Add Settings page here
+  ProfileChange: {screen: ProfileChange}
   },
   {
   defaultNavigationOptions: {
