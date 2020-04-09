@@ -41,6 +41,9 @@ target 'foodAlert' do
   pod 'Firebase/Database', '~> 6.13.0'
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
 
+  # Third party deps podspec link
+  pod 'react-native-camera', path: '../node_modules/react-native-camera'
+
   target 'foodAlertTests' do
     inherit! :search_paths
     # Pods for testing
