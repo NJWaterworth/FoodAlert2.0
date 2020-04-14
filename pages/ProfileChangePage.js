@@ -22,6 +22,7 @@ export default class ProfileChangePage extends React.Component {
     super(props);
     let user = firebase.auth().currentUser;
     this.state = {
+        currentPassword: '',
         newPassword: '',
         newConfirmPassword: '',
         newFirstName: '',
@@ -32,6 +33,15 @@ export default class ProfileChangePage extends React.Component {
 
    onChange() {
       let user = firebase.auth().currentUser;
+      const credential = firebase.auth.EmailAuthProvider.credential(
+        user.email,
+        this.state.currentPassword
+      );
+      user.reauthenticateWithCredential(credential)
+        .catch((error) => {
+          Alert.alert(error.message);
+          return;
+        })
       if (this.state.newPassword !== '') {
         if (this.state.newPassword === this.state.newConfirmPassword) {
           user.updatePassword(this.state.newPassword)
@@ -71,6 +81,14 @@ export default class ProfileChangePage extends React.Component {
     const {navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
+
+        <TextInput
+          value={this.state.currentPassword}
+          onChangeText={(currentPassword) => this.setState({ currentPassword })}
+          placeholder={'Enter Current Password'}
+          secureTextEntry={true}
+          style={styles.input}
+        />
 
         <TextInput
           value={this.state.newPassword}
