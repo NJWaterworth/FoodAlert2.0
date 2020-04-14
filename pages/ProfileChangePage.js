@@ -38,43 +38,45 @@ export default class ProfileChangePage extends React.Component {
         this.state.currentPassword
       );
       user.reauthenticateWithCredential(credential)
+        .then(() => {
+          if (this.state.newPassword !== '') {
+            if (this.state.newPassword === this.state.newConfirmPassword) {
+              user.updatePassword(this.state.newPassword)
+                .catch((error) => {
+                  Alert.alert(error.message);
+                })
+            }
+          }
+          if (this.state.newEmail !== '') {
+            user.updateEmail(this.state.newEmail)
+              .catch((error) => {
+                Alert.alert(error.message);
+              })
+            let userRef = firebase.database().ref("Users/" + user.uid);
+            userRef.update({'email' : this.state.newEmail})
+              .catch((error) => {
+                Alert.alert(error.message);
+              })
+          }
+          if (this.state.newFirstName !== '' && this.state.newLastName !== '')  {
+            let userRef = firebase.database().ref("Users/" + user.uid);
+            
+            userRef.update({'firstname' : this.state.newFirstName})
+              .catch((error) => {
+                Alert.alert(error.message);
+              })    
+            userRef.update({'lastname' : this.state.newLastName})
+              .catch((error) => {
+                Alert.alert(error.message);
+              })     
+          }
+    
+          this.props.navigation.navigate('Profile');
+        })
         .catch((error) => {
           Alert.alert(error.message);
-          return;
         })
-      if (this.state.newPassword !== '') {
-        if (this.state.newPassword === this.state.newConfirmPassword) {
-          user.updatePassword(this.state.newPassword)
-            .catch((error) => {
-              Alert.alert(error.message);
-            })
-        }
-      }
-      if (this.state.newEmail !== '') {
-        user.updateEmail(this.state.newEmail)
-          .catch((error) => {
-            Alert.alert(error.message);
-          })
-        let userRef = firebase.database().ref("Users/" + user.uid);
-        userRef.update({'email' : this.state.newEmail})
-          .catch((error) => {
-            Alert.alert(error.message);
-          })
-      }
-      if (this.state.newFirstName !== '' && this.state.newLastName !== '')  {
-        let userRef = firebase.database().ref("Users/" + user.uid);
-        
-        userRef.update({'firstname' : this.state.newFirstName})
-          .catch((error) => {
-            Alert.alert(error.message);
-          })    
-        userRef.update({'lastname' : this.state.newLastName})
-          .catch((error) => {
-            Alert.alert(error.message);
-          })     
-      }
-
-      this.props.navigation.navigate('Profile');
+      
     }
   render()
    {
