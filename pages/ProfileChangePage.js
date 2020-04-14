@@ -11,32 +11,60 @@ import {
   Button,
   StatusBar,
 } from 'react-native';
+import firebase from 'react-native-firebase';
+
 
 export default class ProfileChangePage extends React.Component {
   static navigationOptions = {
     title: 'ProfileChange',
   };
   constructor(props) {
-       super(props);
-
-       this.state = {
-           newUsername: '',
-           newPassword: '',
-           newConfirmPassword: '',
-           oldPassword: '',
-           newName: '',
-           newEmail: '',
-       };
+    super(props);
+    let user = firebase.auth().currentUser;
+    this.state = {
+        newPassword: '',
+        newConfirmPassword: '',
+        newFirstName: '',
+        newLastName: '',
+        newEmail: '',
+    };
    }
 
    onChange() {
-      //TODO Add Logic when Firebase is made
-        Alert.alert("Button Pressed", this.state.oldPassword + "\n + "
-        + this.state.newUsername +  "\n + " 
-        + this.state.newPassword +  "\n + " 
-        + this.state.newConfirmPassword +  "\n + " 
-        + this.state.newName +  "\n + " 
-        + this.state.newEmail)
+      let user = firebase.auth().currentUser;
+      if (this.state.newPassword !== '') {
+        if (this.state.newPassword === this.state.newConfirmPassword) {
+          user.updatePassword(this.state.newPassword)
+            .catch((error) => {
+              Alert.alert(error.message);
+            })
+        }
+      }
+      if (this.state.newEmail !== '') {
+        user.updateEmail(this.state.newEmail)
+          .catch((error) => {
+            Alert.alert(error.message);
+          })
+        let userRef = firebase.database().ref("Users/" + user.uid);
+        userRef.update({'email' : this.state.newEmail})
+          .catch((error) => {
+            Alert.alert(error.message);
+          })
+      }
+      if (this.state.newFirstName !== '' && this.state.newLastName !== '')  {
+        let userRef = firebase.database().ref("Users/" + user.uid);
+        
+        userRef.update({'firstname' : this.state.newFirstName})
+          .catch((error) => {
+            Alert.alert(error.message);
+          })    
+        userRef.update({'lastname' : this.state.newLastName})
+          .catch((error) => {
+            Alert.alert(error.message);
+          })     
+      }
+
+      this.props.navigation.navigate('Profile');
     }
   render()
    {
@@ -44,22 +72,6 @@ export default class ProfileChangePage extends React.Component {
     return (
       <View style={styles.container}>
 
-
-        <TextInput
-          value={this.state.oldPassword}
-          onChangeText={(oldPassword) => this.setState({ oldPassword })}
-          placeholder={'Enter Current Password'}
-          secureTextEntry={true}
-          style={styles.input}
-        />
-
-        <TextInput
-          value={this.state.newUsername}
-          onChangeText={(newUsername) => this.setState({ newUsername })}
-          placeholder={'Enter New Username'}
-          style={styles.input}
-        />
-    
         <TextInput
           value={this.state.newPassword}
           onChangeText={(newPassword) => this.setState({ newPassword })}
@@ -77,9 +89,16 @@ export default class ProfileChangePage extends React.Component {
         />
 
         <TextInput
-          value={this.state.newName}
-          onChangeText={(newName) => this.setState({ newName })}
-          placeholder={'Enter New Name'}
+          value={this.state.newFirstName}
+          onChangeText={(newFirstName) => this.setState({ newFirstName })}
+          placeholder={'Enter New First Name'}
+          style={styles.input}
+        />
+
+        <TextInput
+          value={this.state.newLastName}
+          onChangeText={(newLastName) => this.setState({ newLastName })}
+          placeholder={'Enter New Last Name'}
           style={styles.input}
         />
 
