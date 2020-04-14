@@ -10,27 +10,65 @@ import {
   Text,
   Button,
   StatusBar,
+  TouchableHighlight,
+  TextInput,
+  Alert
 } from 'react-native';
 
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import {TextInput} from 'react-native';
+import CustomButton from '../components/custombutton';
+import firebase from 'react-native-firebase';
+
 
 const expired = {key:'expired', color: 'red', state: 'expired'};
-const expiring = {key:'expiring', color: 'blue', state: 'expiring'};
+let currentUser = firebase.auth().currentUser;
+let addItem = (uid, date, status, item) => {
+  var ref = firebase.database().ref('Users').child(uid).child("date").child(date).push({
+    foodItem: item,
+    foodStatus: status
+  }, function(error) {
+    if (error) {
+      Alert.alert('Item saved failed');
+    } else {
+      Alert.alert('Item saved successfully');
+    }
+  });
+};
 
 export default class CalendarPage extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      selected: undefined
+      selected: undefined,
+      foodItem: '',
+      foodStatus: ''
     };
   }
 
+  handleChange = e => {
+    this.setState({
+      foodItem: e.nativeEvent.text,
+      foodStatus: 'not expired'
+    });
+  };
+
+  handleSubmit = () => {
+    uid = currentUser.uid
+    addItem(uid, this.state.selected, this.state.foodStatus, this.state.foodItem);
+  };
+
+  onDelete = () => {
+    const uid = currentUser.uid
+    const date = this.state.selected
+    firebase.database().ref('Users').child(uid).child("date").child(date).remove();
+    Alert.alert('Items deleted successfully');
+  };
+
   onDayPress = (day) => {
     this.setState({selected: day.dateString});
-    TextInput
     console.log('selected day', day);
+    this.handleLoading(day.dateString);
   }
 
   onDayLongPress = (day) => {
@@ -41,7 +79,27 @@ export default class CalendarPage extends React.Component {
   static navigationOptions = {
     title: 'Calendar',
   };
-  
+
+  handleLoading(day) {
+    const uid = currentUser.uid
+    var ref = firebase.database().ref('Users').child(uid).child("date").child(day);
+    ref.once('value', function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        var childKey = childSnapshot.key;
+        var userData = childSnapshot.val();
+        console.log(userData);
+      });
+    });
+    // ref.once('value', (snapshot) => {
+    //   userData = snapshot.val();
+    //   if(userData != null) {
+    //     console.log(userData);
+    //     this.setState({foodItem: userData.foodItem, foodStatus: userData.foodStatus});
+    //     console.log(this.state.foodItem, this.state.foodStatus);
+    //   }
+    // });
+  }
+
   render() {
     const {navigate} = this.props.navigation;
     const { selected } = this.state;
@@ -62,19 +120,35 @@ export default class CalendarPage extends React.Component {
           // Collection of dates that have to be marked. Default = {}
           markedDates={{
             // examples of dots or select color
-            '2020-03-24': {dots: [expiring], selectedColor: 'green'},
             '2020-03-25': {dots: [expired], selectedColor: 'green'},
-            '2020-03-26': {dots: [expired, expiring], selectedColor: 'green'},
+            '2020-03-26': {dots: [expired], selectedColor: 'green'},
             [this.state.selected]: {selected: true, selectedColor: 'green'},
           }}
           markingType={'multi-dot'}
           // Specify theme properties to override specific styles for calendar parts. Default = {}
           theme={{}}
         />
-        <Text style={{padding:16}}>SELECTED DATE :</Text>
-        <Text style={{padding:16}}>{selected}</Text>
-        <Text style={{padding:16}}>EXPIRING FOOD :</Text>
+        <Text style={{padding:16}}>SELECT A DATE : {selected} </Text>
         <Text style={{padding:16}}>EXPIRED FOOD :</Text>
+
+        <Text style={{padding:16}}>ADD ITEM</Text>
+        <TextInput style={{padding:16}} onChange={this.handleChange} placeholder={'Enter a Food Item and Select a Date'}/>
+        
+        <TouchableHighlight
+          style={styles.button}
+          underlayColor="white"
+          onPress={this.handleSubmit}
+        >
+        <Text style={styles.buttonText}>Add</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight
+          style={styles.button}
+          underlayColor="white"
+          onPress={this.onDelete}
+        >
+        <Text style={styles.buttonText}>Delete</Text>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -87,8 +161,28 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 20,
+    alignSelf: 'center',
     fontWeight: 'bold',
   },
+  buttonText: {
+    fontSize: 18,
+    color: '#111',
+    alignSelf: 'center'
+  },
+  button: {
+    height: 45,
+    marginLeft: 50,
+    marginRight: 50,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    marginTop: 20,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  }
 });
 
 // const styles = StyleSheet.create({
