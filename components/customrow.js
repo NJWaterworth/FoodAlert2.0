@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image} from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const CustomRow = ({ title, description, image_url }) => (
+const CustomRow = ({title, description, image_url}) => (
     <View style={styles.container}>
         <Image source={{ uri: image_url }} style={styles.photo} />
         <View style={styles.container_text}>

@@ -14,9 +14,9 @@ const CustomListview = ({ itemList }) => (
         <FlatList
                 data={itemList}
                 renderItem={({ item }) => <CustomRow
-                    title={item.title}
-                    description={item.description}
-                    image_url={item.image_url}
+                    title={item.date}
+                    description={item.foodItem}
+                    image_url={'../images/apple1.png'}
                 />}
             />
 
