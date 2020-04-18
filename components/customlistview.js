@@ -13,10 +13,11 @@ const CustomListview = ({ itemList }) => (
     <View style={styles.container}>
         <FlatList
                 data={itemList}
-                renderItem={({ item }) => <CustomRow
-                    title={item.date}
-                    description={item.foodItem}
-                    image_url={'../images/apple1.png'}
+                keyExtractor = {({x, i}) => i }
+				renderItem = {({item}) =>
+				<CustomRow
+                    title={item.food}
+                    description={item.date}
                 />}
             />
 

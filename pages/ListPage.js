@@ -1,70 +1,78 @@
-import React, {Component} from 'react';
-import CustomListview from '../components/customlistview';
+import React, { Component } from 'react';
 import firebase from 'react-native-firebase';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  Button,
-  platform,
-  StatusBar,
+import CustomListview from '../components/customlistview';
+import { 
+	StyleSheet,
+	Text,
+	ActivityIndicator,
+	View, 
+	FlatList
 } from 'react-native';
-
 
 const currentUser = firebase.auth().currentUser;
 const uid = currentUser.uid;
 const ref = firebase.database().ref('Users').child(uid).child("date");
+export default class ListPage extends Component {
 	
-export default class ListPage extends React.Component {
-  static navigationOptions = {
-    title: 'List',
-  };
-  
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      fo : [],
-    };
-  }
- 
-	fetchData = async () =>{ 
-	var inOrder = ref.orderByKey();
-     inOrder.once('value', function(snapshot) {
-	  var foodLists = [];
-      snapshot.forEach(function(childSnapshot) {
-        var dates = childSnapshot.key;
-		var items = childSnapshot.val();
-		var foods = Object.values(items);
-		foodLists.push({
-			'date': dates,
-			'foodItem': foods[0].foodItem,
-			'foodStatus': foods[0].foodStatus
-		});
-      });
-	  return foodLists;
-	});
-  }
-  
-  async render() {
-    const {navigate} = this.props.navigation;
-	const obj = await this.fetchData();
-	console.log(obj);
-    return (
-      <View style={styles.container}>
-        <CustomListview
-          itemList={obj}
-        />
-      </View>
-    );
-  }
+	
+	static navigationOptions = {
+		title: 'List',
+	};
+	
+	state = {
+		data: [],
+	};
+	
+	componentDidMount() {
+		this.fetchData();
+	}
+	
+	fetchData = async () => {
+		var response = await this.loadData();
+
+		if ( response == undefined)
+		{
+			console.log('oop');
+		} 
+		else 
+		{
+			console.log('hit', response);
+			this.setState({data: response});
+		}
+	};
+	
+	loadData = async() =>
+	{
+	  var temp = [];
+	  await ref.on('value', snapshot => {
+		  snapshot.forEach( childSnapshot => {
+			var dates = childSnapshot.key;
+			var items = childSnapshot.val();
+			var foods = Object.values(items);
+			temp.push({
+				date : dates, 
+				food : foods[0].foodItem,
+				});
+		  });
+	  });
+	  return ( temp );
+	}
+	
+	render() {
+		const {navigate} = this.props.navigation;
+		return (
+			<View style = {styles.container}>
+				<CustomListview
+					itemList = {this.state.data}
+				/>
+			</View>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FCFCFC',
-  }
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+	}
 });
