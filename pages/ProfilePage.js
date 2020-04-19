@@ -9,6 +9,7 @@ import {
   Image,
   Button,
   StatusBar,
+  Alert,
 } from 'react-native';
 import firebase from 'react-native-firebase';
 
@@ -47,7 +48,12 @@ export default class ProfilePage extends React.Component {
   }
 
   onLogOut() {
-    this.props.navigation.navigate('Login');
+    firebase.auth().signOut()
+      .then(() => {
+        this.props.navigation.navigate('Login');
+      }).catch((error) => {
+        Alert.alert(error.message);
+      })
   }
 
   
