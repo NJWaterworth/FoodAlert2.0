@@ -15,7 +15,6 @@ export default class Login extends React.Component {
 
    componentDidMount() {
      firebase.auth().onAuthStateChanged(user => {
-       console.log(user);
        if (user) {
         this.props.navigation.navigate("Profile");
        }
