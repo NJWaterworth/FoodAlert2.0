@@ -60,7 +60,7 @@ const CalendarStack = createStackNavigator({
 
 const ProfileStack = createStackNavigator({
   Profile: {screen: ProfilePage},
-  ProfileChange: {screen: ProfileChange}
+  ProfileChange: {screen: ProfileChange},
   },
   {
   defaultNavigationOptions: {
