@@ -1,6 +1,7 @@
 import React from 'react';
-import { Alert, StyleSheet, View, TextInput, Button } from 'react-native';
+import { Alert, ImageBackground, StyleSheet, View, TextInput, Button } from 'react-native';
 import firebase from 'react-native-firebase';
+import CustomButtom from '../components/custombutton';
 
 export default class Register extends React.Component {
     constructor(props) {
@@ -54,65 +55,80 @@ export default class Register extends React.Component {
 
     render() {
         return(
-            <View style={styles.container}>
-            <TextInput
-                value={this.state.email}
-                onChangeText={(email) => this.setState({ email })}
-                placeholder={'email'}
-                style={styles.input}
-            />
-            <TextInput
-                value={this.state.password}
-                onChangeText={(password) => this.setState({ password })}
-                placeholder={'Password'}
-                secureTextEntry={true}
-                style={styles.input}
-            />
+            <ImageBackground
+                style={styles.imgBackground}
+                resizeMode='cover'
+                source={require('../images/apple1.png')}
+            >
 
-            <TextInput
-                value={this.state.confirmPassword}
-                onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
-                placeholder={'Confirm Password'}
-                secureTextEntry={true}
-                style={styles.input}
-            />
+                <View style={styles.container}>
+                <TextInput
+                    value={this.state.email}
+                    onChangeText={(email) => this.setState({ email })}
+                    placeholder={'email'}
+                    style={styles.input}
+                />
+                <TextInput
+                    value={this.state.password}
+                    onChangeText={(password) => this.setState({ password })}
+                    placeholder={'Password'}
+                    secureTextEntry={true}
+                    style={styles.input}
+                />
 
-            <TextInput
-                value={this.state.firstname}
-                onChangeText={(firstname) => this.setState({ firstname })}
-                placeholder={'first name'}
-                style={styles.input}
-            />
-            
-            <TextInput
-                value={this.state.lastname}
-                onChangeText={(lastname) => this.setState({ lastname })}
-                placeholder={'last name'}
-                style={styles.input}
-            />
-  
-            <Button
-                title={'Login'}
-                style={styles.input}
-                onPress={this.onRegister.bind(this)}
-            />
-            </View>
+                <TextInput
+                    value={this.state.confirmPassword}
+                    onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
+                    placeholder={'Confirm Password'}
+                    secureTextEntry={true}
+                    style={styles.input}
+                />
+
+                <TextInput
+                    value={this.state.firstname}
+                    onChangeText={(firstname) => this.setState({ firstname })}
+                    placeholder={'first name'}
+                    style={styles.input}
+                />
+                
+                <TextInput
+                    value={this.state.lastname}
+                    onChangeText={(lastname) => this.setState({ lastname })}
+                    placeholder={'last name'}
+                    style={styles.input}
+                />
+    
+                <CustomButtom
+                    text="Login"
+                    onPress={this.onRegister.bind(this)}
+                    customStyle={{
+                        backgroundColor: 'rgba(88, 194, 141, 0.8)',
+                        marginBottom: 0
+                    }}
+                />
+                </View>
+            </ImageBackground>
         );
     }
 }
 const styles = StyleSheet.create({
+	imgBackground:{
+		width: '100%',
+		height: '100%',
+		flex: 1
+	},
     container: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: '#ecf0f1', 
+	  backgroundColor: 'transparent',
     },
     input: {
       width: 200,
       height: 44,
       padding: 10,
-      borderWidth: 1,
-      borderColor: 'black',
+	  backgroundColor: 'rgba(255,255,255,.8)',
+	  borderRadius: 10,
       marginBottom: 10,
     },
   });
