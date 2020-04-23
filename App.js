@@ -32,6 +32,7 @@ import CameraPage from './pages/CameraPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ReviewPage from './pages/ReviewPage';
 
 const LoginStack = createStackNavigator({
   Login: {screen: LoginPage},
@@ -79,6 +80,12 @@ const ListStack = createStackNavigator({
 
 const CameraStack = createStackNavigator({
   Camera: {screen: CameraPage},
+  ReviewPage: {screen: ReviewPage}
+  },
+  {
+    navigationOptions: {
+        headerShown: false,
+  },
 });
 
 const Home = createBottomTabNavigator(
