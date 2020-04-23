@@ -39,6 +39,7 @@ target 'foodAlert' do
   pod 'Firebase/Core', '~> 6.13.0'
   pod 'Firebase/Auth', '~> 6.13.0'
   pod 'Firebase/Database', '~> 6.13.0'
+  pod 'Firebase/Firestore', '~> 6.13.0'
 
   # Third party deps podspec link
   pod 'react-native-camera', path: '../node_modules/react-native-camera'
