@@ -18,6 +18,8 @@ import {
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import CustomButton from '../components/custombutton';
 import firebase from 'react-native-firebase';
+import CustomListview from '../components/customlistview';
+
 
 
 const expired = {key:'expired', color: 'red', state: 'expired'};
@@ -42,7 +44,8 @@ export default class CalendarPage extends React.Component {
     this.state = {
       selected: undefined,
       foodItem: '',
-      foodStatus: ''
+      foodStatus: '',
+      itemList: []
     };
   }
 
@@ -55,7 +58,8 @@ export default class CalendarPage extends React.Component {
 
   handleSubmit = () => {
     uid = currentUser.uid
-    addItem(uid, this.state.selected, this.state.foodStatus, this.state.foodItem);
+    addItem(uid, this.state.selected);
+    this.setState({foodItem: ''});
   };
 
   onDelete = () => {
@@ -66,9 +70,9 @@ export default class CalendarPage extends React.Component {
   };
 
   onDayPress = (day) => {
-    this.setState({selected: day.dateString});
+    this.setState({selected: day.dateString, itemList: this.handleLoading(day.dateString)});
+    console.log(this.state.itemList)
     console.log('selected day', day);
-    this.handleLoading(day.dateString);
   }
 
   onDayLongPress = (day) => {
@@ -82,23 +86,25 @@ export default class CalendarPage extends React.Component {
 
   handleLoading(day) {
     const uid = currentUser.uid
+    var itemList = []
     var ref = firebase.database().ref('Users').child(uid).child("date").child(day);
     ref.once('value', function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
         var childKey = childSnapshot.key;
         var userData = childSnapshot.val();
-        console.log(userData);
+        if(userData){
+          var foodItem = userData.foodItem;
+          var foodStatus = userData.foodStatus;
+          if(foodStatus == 'expired') {
+            itemList.push({
+              foodItem: foodItem
+            });
+            console.log(itemList);
+          }
+        }
       });
     });
-    // ref.once('value', (snapshot) => {
-    //   userData = snapshot.val();
-    //   if(userData != null) {
-    //     console.log(userData);
-    //     this.setState({foodItem: userData.foodItem, foodStatus: userData.foodStatus});
-    //     console.log(this.state.foodItem, this.state.foodStatus);
-    //   }
-    // });
-  }
+  };
 
   render() {
     const {navigate} = this.props.navigation;
@@ -129,10 +135,10 @@ export default class CalendarPage extends React.Component {
           theme={{}}
         />
         <Text style={{padding:16}}>SELECT A DATE : {selected} </Text>
-        <Text style={{padding:16}}>EXPIRED FOOD :</Text>
+        <Text style={{padding:16}}>EXPIRED FOOD : {this.state.itemList}</Text>
 
         <Text style={{padding:16}}>ADD ITEM</Text>
-        <TextInput style={{padding:16}} onChange={this.handleChange} placeholder={'Enter a Food Item and Select a Date'}/>
+        <TextInput style={{padding:16}} onChange={this.handleChange} value = {this.state.foodItem} placeholder={'Enter a Food Item and Select a Date'}/>
         
         <TouchableHighlight
           style={styles.button}
@@ -182,6 +188,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: 'stretch',
     justifyContent: 'center'
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#FCFCFC',
   }
 });
 
