@@ -8,7 +8,7 @@ const helpers = {
     // pull all fdcIds from response and load them into an array
     console.log(itemName);
     var date = new Date(date);
-    var newDate = new Date();
+    console.log(date)
     var newDateString;
     var fdcIds = [];
     var found = false;
@@ -40,10 +40,16 @@ const helpers = {
                   days = parseInt(doc.data().expiration_days) + 1;
                   status = 'expired';
                   console.log(days);
-                  newDate.setDate(date.getDate() + days); 
-                  var dd = newDate.getDate();
-                  var mm = newDate.getMonth() + 1;
-                  var y = newDate.getFullYear();
+                  date.setDate(date.getDate() + days); 
+                  var dd = date.getDate();
+                  if (dd < 10) {
+                    dd = '0' +dd;
+                  }
+                  var mm = date.getMonth() + 1;
+                  if(mm < 10) {
+                    mm = '0' +mm;
+                  }
+                  var y = date.getFullYear();
                   newDateString = y + '-'+ mm + '-'+ dd;
                   console.log(newDateString);
                   console.log(status);

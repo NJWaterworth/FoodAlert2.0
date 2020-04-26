@@ -19,7 +19,7 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import CustomButton from '../components/custombutton';
 import firebase from 'react-native-firebase';
 import helpers from '../helpers';
-
+import CustomListview from '../components/customlistview';
 
 const expired = {key:'expired', color: 'red', state: 'expired'};
 let currentUser = firebase.auth().currentUser;
@@ -43,15 +43,32 @@ export default class CalendarPage extends React.Component {
   };
 
   handleSubmit = () => {
-    uid = currentUser.uid
-    helpers.addItem(uid, this.state.selected, this.state.foodStatus, this.state.foodItem);
+    uid = currentUser.uid;
+    if(this.state.selected == null) {
+      Alert.alert('Plese select a date');
+    }
+    else if(this.state.foodItem == '') {
+      Alert.alert('Plese enter a food item');
+    }
+    else {
+      helpers.addItem(uid, this.state.selected, this.state.foodStatus, this.state.foodItem);
+      this.setState({foodItem: ''});
+    }
   };
 
-  onDelete = () => {
+  onDelete = async () => {
     const uid = currentUser.uid
     const date = this.state.selected
-    firebase.database().ref('Users').child(uid).child("date").child(date).remove();
-    Alert.alert('Items deleted successfully');
+    var ref = firebase.database().ref('Users').child(uid).child("date").child(date);
+    ref.once('value', function(snapshot) {
+      if(snapshot.val() != null){
+        ref.remove();
+        Alert.alert("Items successfully deleted.")
+      }
+      else {
+        Alert.alert("Nothing to delete.")
+      }
+    });
   };
 
   onDayPress = (day) => {
@@ -121,7 +138,7 @@ export default class CalendarPage extends React.Component {
         <Text style={{padding:16}}>EXPIRED FOOD :</Text>
 
         <Text style={{padding:16}}>ADD ITEM</Text>
-        <TextInput style={{padding:16}} onChange={this.handleChange} placeholder={'Enter a Food Item and Select a Date'}/>
+        <TextInput style={{padding:16}} onChange={this.handleChange} value = {this.state.foodItem} placeholder={'Enter a Food Item and Select a Date'}/>
         
         <TouchableHighlight
           style={styles.button}
@@ -171,7 +188,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: 'stretch',
     justifyContent: 'center'
-  }
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#FCFCFC',
+  }	  
 });
 
 // const styles = StyleSheet.create({
