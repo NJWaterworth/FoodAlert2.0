@@ -18,22 +18,11 @@ import {
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import CustomButton from '../components/custombutton';
 import firebase from 'react-native-firebase';
+import helpers from '../helpers';
 
 
 const expired = {key:'expired', color: 'red', state: 'expired'};
 let currentUser = firebase.auth().currentUser;
-let addItem = (uid, date, status, item) => {
-  var ref = firebase.database().ref('Users').child(uid).child("date").child(date).push({
-    foodItem: item,
-    foodStatus: status
-  }, function(error) {
-    if (error) {
-      Alert.alert('Item saved failed');
-    } else {
-      Alert.alert('Item saved successfully');
-    }
-  });
-};
 
 export default class CalendarPage extends React.Component {
   constructor(props) {
@@ -55,7 +44,7 @@ export default class CalendarPage extends React.Component {
 
   handleSubmit = () => {
     uid = currentUser.uid
-    addItem(uid, this.state.selected, this.state.foodStatus, this.state.foodItem);
+    helpers.addItem(uid, this.state.selected, this.state.foodStatus, this.state.foodItem);
   };
 
   onDelete = () => {
