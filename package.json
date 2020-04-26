@@ -23,8 +23,6 @@
     "react-native-image-picker": "^2.3.1",
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.6.2",
-    "react-native-tesseract-ocr": "^1.0.10",
-    "react-native-text-detector": "0.0.6",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^2.0.15",

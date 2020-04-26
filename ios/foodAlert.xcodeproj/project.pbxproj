@@ -44,7 +44,6 @@
 		0E13F3D8333940A094CA808A /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FE7DDAE230547209282EB5D /* Octicons.ttf */; };
 		79F623EAB8094DA5ABB3E072 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1708FAE557EA4537BBDF08D3 /* SimpleLineIcons.ttf */; };
 		34210708EFE449D297CBFEED /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F1C8ACF4B5F4324B52D56D9 /* Zocial.ttf */; };
-		F538F0566E8840A5AD27734B /* libRNTesseractOcr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72953E55FC5540C2859D7431 /* libRNTesseractOcr.a */; };
 		D9FC2BECB6072F25D6BE58A2 /* libPods-foodAlert-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFAB0480010CAA32B6312F59 /* libPods-foodAlert-tvOS.a */; };
 		F4F53097D9E8411D9757303C /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BC6041DADE64AF2A5061DF0 /* FontAwesome5_Brands.ttf */; };
 /* End PBXBuildFile section */
@@ -125,8 +124,6 @@
 		7FE7DDAE230547209282EB5D /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1708FAE557EA4537BBDF08D3 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		5F1C8ACF4B5F4324B52D56D9 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		83CCD1939A1B4E71B8B27567 /* RNTesseractOcr.xcodeproj */ = {isa = PBXFileReference; name = "RNTesseractOcr.xcodeproj"; path = "../node_modules/react-native-tesseract-ocr/ios/RNTesseractOcr.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		72953E55FC5540C2859D7431 /* libRNTesseractOcr.a */ = {isa = PBXFileReference; name = "libRNTesseractOcr.a"; path = "libRNTesseractOcr.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		F85EA35C1ECF4ADA8457AF88 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		FAFAA71D2C5A461C956EF2ED /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -144,8 +141,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC65436DA2AA826F8B4D0EC4 /* libPods-foodAlert.a in Frameworks */,
-				F538F0566E8840A5AD27734B /* libRNTesseractOcr.a in Frameworks */,
 				1921245C5D843C6332D44FB3 /* libPods-foodAlert.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,7 +227,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				83CCD1939A1B4E71B8B27567 /* RNTesseractOcr.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
