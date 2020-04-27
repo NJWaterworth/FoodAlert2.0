@@ -36,7 +36,7 @@ export default class ProfilePage extends React.Component {
       email: '',
       imgSource: '',
       images: [],
-      url: '../images/blank_profile.png'
+      url: ''
   };
   }
 
@@ -70,7 +70,7 @@ export default class ProfilePage extends React.Component {
         this.setState({loading: false})
       }).
       catch(error => {
-        this.setState({url: "../images/blank_profile.png"})
+        this.setState({url: "userData/images/default"})
         this.setState({loading: false})
       })
   }
