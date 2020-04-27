@@ -150,11 +150,22 @@ const styles = StyleSheet.create({
       backgroundColor: '#ecf0f1', 
       // marginTop: 75,
     },
+	
+	input: {
+      width: 200,
+      height: 44,
+      padding: 10,
+	  backgroundColor: 'rgba(255,255,255,.8)',
+	  borderRadius: 10,
+      marginBottom: 10,
+    },
+	
     input: {
       width: 200,
       height: 44,
       padding: 10,
       borderWidth: 1,
+	  borderRadius: 10,
       borderColor: 'black',
       marginBottom: 10,
     },
