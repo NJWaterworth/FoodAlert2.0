@@ -9,9 +9,7 @@ import {
 	FlatList
 } from 'react-native';
 
-const currentUser = firebase.auth().currentUser;
-const uid = currentUser.uid;
-const ref = firebase.database().ref('Users').child(uid).child("date");
+
 export default class ListPage extends Component {
 	
 	
@@ -24,11 +22,15 @@ export default class ListPage extends Component {
 	};
 	
 	componentDidMount() {
-		this.fetchData();
+		let currentUser = firebase.auth().currentUser;
+		let uid = currentUser.uid;
+		let ref = firebase.database().ref('Users').child(uid).child("date");
+		
+		this.fetchData(ref);
 	}
 	
-	fetchData = async () => {
-		var response = await this.loadData();
+	fetchData = async (ref) => {
+		var response = await this.loadData(ref);
 
 		if ( response == undefined)
 		{
@@ -41,11 +43,11 @@ export default class ListPage extends Component {
 		}
 	};
 	
-	loadData = async() =>
+	loadData = async(ref) =>
 	{
 	  var temp = [];
-	  await ref.on('value', snapshot => {
-		  snapshot.forEach( childSnapshot => {
+	  await ref.on('value', function(snapshot){
+		  snapshot.forEach( function(childSnapshot){
 			var dates = childSnapshot.key;
 			var items = childSnapshot.val();
 			var foods = Object.values(items);
@@ -55,6 +57,7 @@ export default class ListPage extends Component {
 				});
 		  });
 	  });
+	  
 	  return ( temp );
 	}
 	

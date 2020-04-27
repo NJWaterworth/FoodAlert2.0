@@ -52,7 +52,7 @@ const CalendarStack = createStackNavigator({
   defaultNavigationOptions: {
   //Header customization of the perticular Screen
     headerStyle: {
-      backgroundColor: '#42f44b',
+      backgroundColor: 'rgba(88, 194, 141, 0.8)',
     },
     headerTintColor: '#FFFFFF',
     title: 'Calendar',
@@ -67,7 +67,7 @@ const ProfileStack = createStackNavigator({
   defaultNavigationOptions: {
   //Header customization of the perticular Screen
     headerStyle: {
-      backgroundColor: '#42f44b',
+      backgroundColor: 'rgba(88, 194, 141, 0.8)',
     },
     headerTintColor: '#FFFFFF',
     title: 'Profile',
@@ -81,7 +81,7 @@ const ListStack = createStackNavigator({
   defaultNavigationOptions: {
   //Header customization of the perticular Screen
     headerStyle: {
-      backgroundColor: '#42f44b',
+      backgroundColor: 'rgba(88, 194, 141, 0.8)',
     },
     headerTintColor: '#FFFFFF',
     title: 'List',
@@ -96,7 +96,7 @@ const CameraStack = createStackNavigator({
     defaultNavigationOptions: {
   //Header customization of the perticular Screen
     headerStyle: {
-      backgroundColor: '#42f44b',
+      backgroundColor: 'rgba(88, 194, 141, 0.8)',
     },
     headerTintColor: '#FFFFFF',
     title: 'Camera',
@@ -132,7 +132,7 @@ const Home = createBottomTabNavigator(
       }
     }),
     tabBarOptions: {
-      activeTintColor: '#42f44b',
+      activeTintColor: 'rgba(88, 194, 141, 0.8)',
       inactiveTintColor: 'gray',
     },
     navigationOptions: {
