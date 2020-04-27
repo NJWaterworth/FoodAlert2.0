@@ -70,12 +70,22 @@ const ProfileStack = createStackNavigator({
       backgroundColor: '#42f44b',
     },
     headerTintColor: '#FFFFFF',
-    title: 'List',
+    title: 'Profile',
     }
 });
 
 const ListStack = createStackNavigator({
   List: {screen: ListPage},
+},
+  {
+  defaultNavigationOptions: {
+  //Header customization of the perticular Screen
+    headerStyle: {
+      backgroundColor: '#42f44b',
+    },
+    headerTintColor: '#FFFFFF',
+    title: 'List',
+    }
 });
 
 const CameraStack = createStackNavigator({
@@ -83,8 +93,13 @@ const CameraStack = createStackNavigator({
   ReviewPage: {screen: ReviewPage}
   },
   {
-    navigationOptions: {
-        headerShown: false,
+    defaultNavigationOptions: {
+  //Header customization of the perticular Screen
+    headerStyle: {
+      backgroundColor: '#42f44b',
+    },
+    headerTintColor: '#FFFFFF',
+    title: 'Camera',
   },
 });
 

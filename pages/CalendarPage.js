@@ -140,21 +140,21 @@ export default class CalendarPage extends React.Component {
         <Text style={{padding:16}}>ADD ITEM</Text>
         <TextInput style={{padding:16}} onChange={this.handleChange} value = {this.state.foodItem} placeholder={'Enter a Food Item and Select a Date'}/>
         
-        <TouchableHighlight
-          style={styles.button}
-          underlayColor="white"
-          onPress={this.handleSubmit}
-        >
-        <Text style={styles.buttonText}>Add</Text>
-        </TouchableHighlight>
+        <CustomButton
+          text="Add"
+          onPress = {this.handleSubmit.bind(this)}
+          customStyle={{
+          backgroundColor: 'rgba(88, 194, 141, 0.8)',
+          marginBottom: 0, marginTop: 25, marginLeft: 110}}
+        />
 
-        <TouchableHighlight
-          style={styles.button}
-          underlayColor="white"
-          onPress={this.onDelete}
-        >
-        <Text style={styles.buttonText}>Delete</Text>
-        </TouchableHighlight>
+        <CustomButton
+          text="Delete"
+          onPress = {this.onDelete.bind(this)}
+          customStyle={{
+          backgroundColor: 'rgba(88, 194, 141, 0.8)',
+          marginBottom: 0, marginTop: 25, marginLeft: 110}}
+        />
       </View>
     );
   }
