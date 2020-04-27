@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const styles = StyleSheet.create({
     container: {
@@ -28,12 +29,13 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontStyle: 'italic',
     },
-    photo: {
-        height: 50,
-        width: 50,
+    trash: {
+		color: 'black',
+		justifyContent: 'center',
+		marginRight: 10,
     },
 });
-
+  
 const CustomRow = ({title, description}) => (
     <View style={styles.container}>
         <View style={styles.container_text}>
@@ -44,7 +46,9 @@ const CustomRow = ({title, description}) => (
                 Expiration date: {description}
             </Text>
         </View>
-
+		<View style={styles.trash}>
+			<Ionicons name={'ios-trash'} size={30}/>
+		</View>
     </View>
 );
 
