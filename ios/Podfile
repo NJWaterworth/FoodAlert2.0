@@ -43,8 +43,9 @@ target 'foodAlert' do
   pod 'Firebase/Firestore', '~> 6.13.0'
 
   # Third party deps podspec link
-  pod 'react-native-camera', path: '../node_modules/react-native-camera'
-
+  pod 'react-native-camera', path: '../node_modules/react-native-camera', subspecs: [
+    'TextDetector'
+  ]
 
   target 'foodAlertTests' do
     inherit! :search_paths
