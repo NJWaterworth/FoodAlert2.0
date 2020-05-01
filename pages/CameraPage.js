@@ -143,25 +143,6 @@ export default class CameraScreen extends React.Component {
       } catch (e) {
         console.warn(e);
       }
-
-
-      //TODO: remove me, old tesseract code
-      // console.warn('Data Path', data.uri);
-      // //TODO call tesseract here to deciper image
-      // const tessOptions = {
-      //   whitelist: null,
-      //   blacklist: '1234567890\'!"#$%&/()={}[]+*-_:;<>'
-      // };
-      // RNTesseractOcr.recognize(data.uri.replace('file://',''),'LANG_ENGLISH', tessOptions)
-      // .then((result) => {
-      //     console.log("I'm Done");
-      //     this.setState({ ocrResult: result });
-      //     console.log("OCR Result: ", result);
-      //   })
-      //   .catch((err) => {
-      //     console.log("OCR Error: ", err);
-      //   })
-      //   .done();
     }
   };
 
@@ -208,26 +189,29 @@ export default class CameraScreen extends React.Component {
           <View style={[styles.autoFocusBox, drawFocusRingPosition]} />
           <TouchableWithoutFeedback onPress={this.touchToFocus.bind(this)}>
             <View style={{ flex: 1 }} />
-          </TouchableWithoutFeedback>
-        </View>
+              </TouchableWithoutFeedback>
+            </View>
         <View
           style={{
-            flex: 0.5,
-            height: 72,
+            height: 10,
             backgroundColor: 'transparent',
             flexDirection: 'row',
-            justifyContent: 'space-around',
+            alignSelf: 'flex-end',
+
           }}
         >
           <View
             style={{
+              width:400,
               backgroundColor: 'transparent',
               flexDirection: 'row',
-              justifyContent: 'space-around',
+              alignSelf: 'flex-end',
             }}
           >
-            <TouchableOpacity style={styles.flipButton} onPress={this.toggleFlash.bind(this)}>
-              <Text style={styles.flipText}> FLASH: {this.state.flash} </Text>
+            <TouchableOpacity
+              style={styles.flipButton}
+              onPress={this.toggleFlash.bind(this)}>
+              <Text style={styles.flipText}> Flash: {this.state.flash} </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -274,7 +258,7 @@ export default class CameraScreen extends React.Component {
               style={[styles.flipButton, { flex: 0.25, alignSelf: 'flex-end' }]}
               onPress={this.toggleFocus.bind(this)}
             >
-              <Text style={styles.flipText}> AF : {this.state.autoFocus} </Text>
+              <Text style={styles.flipText}> Focus : {this.state.autoFocus} </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.flipButton, styles.picButton, { flex: 0.3, alignSelf: 'flex-end' }]}
@@ -300,7 +284,7 @@ export default class CameraScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
+    paddingTop: 60,
     backgroundColor: '#000',
   },
   flipButton: {

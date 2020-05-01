@@ -2,6 +2,12 @@ import React from 'react';
 import Moment from 'moment';
 const Fuse = require('fuse.js');
 
+import firebase from 'react-native-firebase';
+
+import helpers from '../helpers';
+
+let currentUser = firebase.auth().currentUser;
+
 import {
   StyleSheet,
   Text,
@@ -14,8 +20,6 @@ import {
   FlatList,
   TextInput
 } from 'react-native';
-
-//foodItem (string:"Apple"), date(string: yyyy-mm-dd), foodStatus(string: "not expired")
 
 export default class ReviewScreen extends React.Component {
   static navigationOptions = {
@@ -31,30 +35,45 @@ export default class ReviewScreen extends React.Component {
       };
   }
 
-  deleteItem = data => {
-  let allItems = [this.state.food_items];
-  let filteredItems = allItems.filter(item => item.id != data.id);
-  this.setState({ food_items: filteredItems })
-}
+  deleteItem(id) {
+    let allItems = this.state.food_items;
+    let filteredItems = allItems.filter(item => item.id != id);
+    this.setState({ food_items: filteredItems })
+    console.log(this.state.food_items);
+  }
 
- Food({ foodItem }) {
-    return (
-      <View style={styles.food}>
-        <TextInput style={styles.name}>{foodItem}</TextInput>
-        <Button title="Remove" onPress={() => this.deleteItem(foodItem)} />
-      </View>
-    );
+  updateItem(text, index) {
+    let allItems = this.state.food_items;
+    allItems[index].foodItem = text;
+    this.setState({ food_items: allItems })
+  }
+
+  addItem() {
+    Moment.locale('en');
+    let date_string = Moment().format('YYYY-MM-D');
+    let allItems = this.state.food_items;
+    let all_len = allItems.length;
+    let new_id = allItems[all_len-1].id + 1;
+    allItems.push({
+                    foodItem: "NEW ITEM",
+                    date: date_string,
+                    foodStatus: "not expired",
+                    id: new_id});
+    this.setState({ food_items: allItems })
   }
 
   parse_reciept(textblocks) {
       let food_list = [];
       var e = -1;
-      let sub_index =-1
+      let sub_index =0
       Moment.locale('en');
       let date_string = Moment().format('YYYY-MM-D');
 
       let raw_strings = [];
       //Find all blocks containing purchased goods
+      if (textblocks.length <= 0) {
+        return []
+      }
       for (let text of textblocks) {
         var input = text.value;
         input = input.split("\n");
@@ -69,7 +88,9 @@ export default class ReviewScreen extends React.Component {
         }
       const fuse = new Fuse(raw_strings, options)
       const result = fuse.search('sub To')
-      sub_index = result[0].refIndex;
+      if( result.length > 0 ) {
+        sub_index = result[0].refIndex;
+      }
 
       console.log(raw_strings);
       raw_strings = raw_strings.slice(0, sub_index)
@@ -140,22 +161,37 @@ export default class ReviewScreen extends React.Component {
       return food_list;
   }
 
-  uploadFood = async function() {
+  uploadFood(food_list) {
+    let uid = currentUser.uid;
+    //add items present in foodlist
+    for (let food of food_list) {
+      helpers.addItem(uid, food.date, food.foodStatus, food.foodItem)
+    }
 
     this.props.navigation.goBack()
-
   }
 
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Details Screen</Text>
           <FlatList
                  data={this.state.food_items}
-                 renderItem={({ item }) => <this.Food foodItem={item.foodItem} />}
+                 extraData={this.state}
+                 renderItem={({item, index}) =>
+                  <View style={styles.food}>
+                    <TextInput style={styles.name}
+                    onChangeText={(new_text) => this.updateItem( new_text, index)}
+                    value={item.foodItem}
+                    />
+                    <Button style={styles.remove} color="#DC143C" title="Remove" onPress={() => this.deleteItem(item.id)} />
+                  </View>
+                 }
                  keyExtractor={item => item.id}
           />
-          <Button title="Submit" onPress={() => this.uploadFood()} />
+          <View style={styles.lowbar}>
+          <Button title="Add Item" onPress={() => this.addItem(this.addItem())} />
+          <Button title="Submit" color="rgba(88, 194, 141, 1)" onPress={() => this.uploadFood(this.state.food_items)} />
+          </View>
       </View>
     );
   }
@@ -176,4 +212,33 @@ const styles = StyleSheet.create({
       borderColor: 'black',
       marginBottom: 10,
     },
+    food: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      alignSelf: 'stretch',
+      textAlign: 'center',
+      flexDirection: 'row',
+      width: '75%',
+      marginTop: 10,
+    },
+    remove: {
+      color: '#DC143C',
+
+    },
+    submit: {
+
+    },
+    add: {
+
+    },
+    name:{
+      color: '#000000'
+    },
+    lowbar:{
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: '90%',
+      marginTop: 10,
+
+    }
   });
