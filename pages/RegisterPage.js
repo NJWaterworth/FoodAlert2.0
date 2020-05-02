@@ -38,7 +38,6 @@ export default class Register extends React.Component {
             return;
         }
     
-            // console.log(firebase.auth());
         firebase.auth()
             .createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(user => {
@@ -46,10 +45,7 @@ export default class Register extends React.Component {
                 this.props.navigation.navigate('Profile', {name: 'Jane'});
             })
             .catch((error)=> {
-                const {code, message} = error;
-                console.log(code);
-                console.log(message);
-                Alert.alert(message);
+                Alert.alert(error.message);
             })
     }
 
