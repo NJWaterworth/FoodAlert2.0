@@ -47,8 +47,6 @@ export default class Register extends React.Component {
             })
             .catch((error)=> {
                 const {code, message} = error;
-                console.log(code);
-                console.log(message);
                 Alert.alert(message);
             })
     }

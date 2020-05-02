@@ -16,7 +16,6 @@ export default class ForgotPassword extends React.Component {
 
     sendEmail() {
         const email = this.state.email;
-        console.log("Email: " + email);
         firebase.auth().sendPasswordResetEmail(email)
         .then(function() {
             // paswword reset email sent

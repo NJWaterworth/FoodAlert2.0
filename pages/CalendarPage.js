@@ -73,13 +73,11 @@ export default class CalendarPage extends React.Component {
 
   onDayPress = (day) => {
     this.setState({selected: day.dateString});
-    console.log('selected day', day);
     this.handleLoading(day.dateString);
   }
 
   onDayLongPress = (day) => {
     this.setState({selected: day.dateString});
-    console.log('selected day', day);
   }
 
   static navigationOptions = {
@@ -93,7 +91,6 @@ export default class CalendarPage extends React.Component {
       snapshot.forEach(function(childSnapshot) {
         var childKey = childSnapshot.key;
         var userData = childSnapshot.val();
-        console.log(userData);
       });
     });
     // ref.once('value', (snapshot) => {
