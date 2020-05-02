@@ -12,14 +12,18 @@ import {
   StatusBar,
   TouchableHighlight,
   TextInput,
-  Alert
+  FlatList,
+  CustomRow,
+  Alert,
+  SwitchIOS
 } from 'react-native';
 
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import CustomButton from '../components/custombutton';
 import firebase from 'react-native-firebase';
 import helpers from '../helpers';
-import CustomListview from '../components/customlistview';
+import CCustomListview from '../components/calendarlistview';
+import CustomListview from '../components/calendarlistview';
 
 const expired = {key:'expired', color: 'red', state: 'expired'};
 let currentUser = firebase.auth().currentUser;
@@ -27,14 +31,15 @@ let currentUser = firebase.auth().currentUser;
 export default class CalendarPage extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       selected: undefined,
       foodItem: '',
-      foodStatus: ''
+      foodStatus: '',
+      itemList: []
     };
   }
-
+  
   handleChange = e => {
     this.setState({
       foodItem: e.nativeEvent.text,
@@ -53,6 +58,7 @@ export default class CalendarPage extends React.Component {
     else {
       helpers.addItem(uid, this.state.selected, this.state.foodStatus, this.state.foodItem);
       this.setState({foodItem: ''});
+      Alert.alert('Item saved successfully.')
     }
   };
 
@@ -71,41 +77,32 @@ export default class CalendarPage extends React.Component {
     });
   };
 
-  onDayPress = (day) => {
+  onDayPress = async (day) => {
     this.setState({selected: day.dateString});
-    console.log('selected day', day);
-    this.handleLoading(day.dateString);
+    let currentUser = firebase.auth().currentUser;
+		let uid = currentUser.uid;
+    let ref = firebase.database().ref('Users').child(uid).child("date").child(day.dateString);
+    // load expired items
+    var temp = [];
+    var that = this;
+    await ref.once('value', function(snapshot){
+		  snapshot.forEach( function(childSnapshot){
+        var item = childSnapshot.val().foodItem;
+        var status = childSnapshot.val().foodStatus;
+        temp.push(item + '\n');
+      });
+      that.setState({itemList: temp});
+    });
   }
 
   onDayLongPress = (day) => {
     this.setState({selected: day.dateString});
-    console.log('selected day', day);
   }
 
   static navigationOptions = {
     title: 'Calendar',
   };
-
-  handleLoading(day) {
-    const uid = currentUser.uid
-    var ref = firebase.database().ref('Users').child(uid).child("date").child(day);
-    ref.once('value', function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        var childKey = childSnapshot.key;
-        var userData = childSnapshot.val();
-        console.log(userData);
-      });
-    });
-    // ref.once('value', (snapshot) => {
-    //   userData = snapshot.val();
-    //   if(userData != null) {
-    //     console.log(userData);
-    //     this.setState({foodItem: userData.foodItem, foodStatus: userData.foodStatus});
-    //     console.log(this.state.foodItem, this.state.foodStatus);
-    //   }
-    // });
-  }
-
+	
   render() {
     const {navigate} = this.props.navigation;
     const { selected } = this.state;
@@ -118,7 +115,7 @@ export default class CalendarPage extends React.Component {
           // Handler which gets executed on day long press. 
           onDayLongPress={this.onDayLongPress}
           // Handler which gets executed when visible month changes in calendar. Default = undefined
-          onMonthChange={(month) => {console.log('month changed', month)}}
+          onMonthChange={(month)  => {console.log('month changed', month)}}
           // Handler which gets executed when press arrow icon left. It receive a callback can go back month
           onPressArrowLeft={substractMonth => substractMonth()}
           // Handler which gets executed when press arrow icon right. It receive a callback can go next month
@@ -126,8 +123,10 @@ export default class CalendarPage extends React.Component {
           // Collection of dates that have to be marked. Default = {}
           markedDates={{
             // examples of dots or select color
-            '2020-03-25': {dots: [expired], selectedColor: 'green'},
-            '2020-03-26': {dots: [expired], selectedColor: 'green'},
+            '2020-04-22': {dots: [expired], selectedColor: 'red'},
+            '2020-04-25': {dots: [expired], selectedColor: 'red'},
+            '2020-04-29': {dots: [expired], selectedColor: 'red'},
+            '2020-05-06': {dots: [expired], selectedColor: 'red'},
             [this.state.selected]: {selected: true, selectedColor: 'green'},
           }}
           markingType={'multi-dot'}
@@ -135,8 +134,7 @@ export default class CalendarPage extends React.Component {
           theme={{}}
         />
         <Text style={{padding:16}}>SELECT A DATE : {selected} </Text>
-        <Text style={{padding:16}}>EXPIRED FOOD :</Text>
-
+        <Text style={{padding:16}}>EXPIRED FOOD : {this.state.itemList}</Text>      
         <Text style={{padding:16}}>ADD ITEM</Text>
         <TextInput style={{padding:16}} onChange={this.handleChange} value = {this.state.foodItem} placeholder={'Enter a Food Item and Select a Date'}/>
         
@@ -190,17 +188,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   container: {
-    flex: 1,
-    backgroundColor: '#FCFCFC',
-  }	  
+		flex: 1,
+		justifyContent: 'center',
+	} 
 });
-
-// const styles = StyleSheet.create({
-//   button: {
-//     alignItems: 'center',
-//     backgroundColor: '#DDDDDD',
-//     padding: 10,
-//     width: 300,
-//     marginTop: 16,
-//   },
-// });
