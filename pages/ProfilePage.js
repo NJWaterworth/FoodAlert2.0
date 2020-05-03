@@ -62,7 +62,6 @@ export default class ProfilePage extends React.Component {
     .catch(error => {
       Alert.alert(error.message);
     });
-    console.log("Loading HTTP get");
     ref = firebase.storage().ref(`/userData/images/${uid}`);
     ref.getDownloadURL().
       then(data => {
@@ -95,14 +94,10 @@ export default class ProfilePage extends React.Component {
   selectImage() {
   ImagePicker.launchImageLibrary(options, response => {
     if (response.didCancel) {
-      console.log('User cancelled image picker')
     } else if (response.error) {
-      console.log('ImagePicker Error: ', response.error)
     } else if (response.customButton) {
-      console.log('User tapped custom button: ', response.customButton)
     } else {
       const source = { uri: response.uri }
-      console.log(source)
       const userID = firebase.auth().currentUser.uid;
       const uploadData = {
         id : userID,
@@ -112,7 +107,6 @@ export default class ProfilePage extends React.Component {
         imgSource: source,
         imageUri: response.uri
       });
-      console.log("RUNNING uploadImage");
     const ext = this.state.imageUri.split('.').pop();
     const filename = userID;
     firebase.storage()

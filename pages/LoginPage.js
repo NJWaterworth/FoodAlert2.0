@@ -28,7 +28,6 @@ export default class Login extends React.Component {
           this.props.navigation.navigate('Profile', {name: 'jasper'})
         })
         .catch((error) => {
-          
           Alert.alert(error.message);
         })
    }

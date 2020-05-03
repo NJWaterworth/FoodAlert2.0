@@ -39,7 +39,6 @@ export default class ReviewScreen extends React.Component {
     let allItems = this.state.food_items;
     let filteredItems = allItems.filter(item => item.id != id);
     this.setState({ food_items: filteredItems })
-    console.log(this.state.food_items);
   }
 
   updateItem(text, index) {
@@ -92,12 +91,9 @@ export default class ReviewScreen extends React.Component {
         sub_index = result[0].refIndex;
       }
 
-      console.log(raw_strings);
       raw_strings = raw_strings.slice(0, sub_index)
-      console.log(raw_strings);
 
       const you_result = fuse.search('you saved')
-      console.log(you_result);
 
       for (let i = 0; i < you_result.length; i++) {
         if(you_result[i].score < .5){
@@ -106,7 +102,6 @@ export default class ReviewScreen extends React.Component {
       }
 
       const mono_result = fuse.search('monopoly')
-      console.log(mono_result);
 
       for (let i = 0; i < mono_result.length; i++) {
         if(mono_result[i].score < .5){
@@ -119,30 +114,24 @@ export default class ReviewScreen extends React.Component {
       //get rid of Bs Values and count items
       for( let i = raw_strings.length -1; i >=0 ; i--) {
         //regex to get prices
-        console.log("Testing, ", raw_strings[i]);
         let re = new RegExp('^[0-9]*\.[0-9][0-9]');
         let ie = new RegExp('/^[-+]?\d+$/ .*F');
 
         if(re.test(raw_strings[i])){
-          console.log("price found!");
           price_count +=1;
           raw_strings.splice(i,1);
         }
         else if(ie.test(raw_strings[i])) {
-          console.log("Useless numbers");
           raw_strings.splice(i,1);
         }
       }
 
-      console.log(raw_strings);
 
       let parsed_block = [];
 
       for( let i = 0; i <price_count; i++) {
         parsed_block.push(raw_strings[raw_strings.length -1 -i])
       }
-
-      console.log(parsed_block);
 
       //for each line in the block,
       let i = 1;
@@ -155,7 +144,6 @@ export default class ReviewScreen extends React.Component {
                       });
         i++;
       }
-      console.log(food_list);
 
       //Turn each item into an object and append to an array
       return food_list;

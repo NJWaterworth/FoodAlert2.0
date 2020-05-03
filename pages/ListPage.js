@@ -34,11 +34,9 @@ export default class ListPage extends Component {
 
 		if ( response == undefined)
 		{
-			console.log('oop');
 		} 
 		else 
 		{
-			console.log('hit', response);
 			this.setState({data: response});
 		}
 	};
