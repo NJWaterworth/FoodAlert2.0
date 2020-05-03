@@ -28,10 +28,8 @@ export default class Login extends React.Component {
           this.props.navigation.navigate('Profile', {name: 'jasper'})
         })
         .catch((error) => {
-          const {code, message} = error;
-          Alert.alert(message);
+          Alert.alert(error.message);
         })
-      //  this.props.navigation.navigate('Profile', {name: 'Jane'});
    }
 
    onSignUp() {
