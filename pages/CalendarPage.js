@@ -79,6 +79,7 @@ export default class CalendarPage extends React.Component {
 
   onDayPress = async (day) => {
     this.setState({selected: day.dateString});
+
     let currentUser = firebase.auth().currentUser;
 		let uid = currentUser.uid;
     let ref = firebase.database().ref('Users').child(uid).child("date").child(day.dateString);
@@ -102,7 +103,6 @@ export default class CalendarPage extends React.Component {
   static navigationOptions = {
     title: 'Calendar',
   };
-	
   render() {
     const {navigate} = this.props.navigation;
     const { selected } = this.state;

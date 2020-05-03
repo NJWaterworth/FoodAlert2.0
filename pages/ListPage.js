@@ -32,13 +32,7 @@ export default class ListPage extends Component {
 	fetchData = async (ref) => {
 		var response = await this.loadData(ref);
 
-		if ( response == undefined)
-		{
-			//console.log('oop');
-		} 
-		else 
-		{
-			//console.log('hit', response);
+		if ( response !== undefined) {
 			this.setState({data: response});
 		}
 	};
